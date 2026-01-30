@@ -60,3 +60,104 @@
 </body>
 </html>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ignice Pro Gaming</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/dist/css/all.min.css">
+    <style>
+        :root { --main-red: #ff4d4d; --main-green: #2ebd59; --bg: #f5f5f5; }
+        body { background: var(--bg); font-family: Arial, sans-serif; margin: 0; padding-bottom: 80px; }
+        .top-nav { background: var(--main-red); color: white; padding: 15px; font-weight: bold; border-radius: 0 0 20px 20px; }
+        .wallet-card { background: white; margin: 15px; padding: 20px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .balance { font-size: 28px; font-weight: bold; margin: 10px 0; color: #333; }
+        .btn-pay { width: 48%; padding: 12px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        .deposit { background: var(--main-green); color: white; }
+        .wingo-box { background: white; margin: 15px; padding: 15px; border-radius: 15px; }
+        .timer-val { font-size: 26px; font-weight: bold; color: var(--main-red); }
+        
+        /* Number Grid */
+        .num-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 15px 0; }
+        .num-btn { aspect-ratio: 1; border-radius: 50%; border: none; font-size: 18px; font-weight: bold; color: white; cursor: pointer; }
+        .n0, .n5 { background: linear-gradient(#9c27b0, #ff4d4d); }
+        .n1, .n3, .n7, .n9 { background: var(--main-green); }
+        .n2, .n4, .n6, .n8 { background: var(--main-red); }
+
+        /* BIG and SMALL Buttons */
+        .bs-row { display: flex; gap: 10px; margin-top: 10px; }
+        .bs-btn { flex: 1; padding: 15px; border: none; border-radius: 10px; font-weight: bold; font-size: 18px; color: white; cursor: pointer; }
+        .big { background: #f39c12; } /* Orange color for Big */
+        .small { background: #3498db; } /* Blue color for Small */
+
+        .footer { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #eee; }
+        .foot-item { text-align: center; color: #888; font-size: 11px; text-decoration: none; }
+        .foot-item i { font-size: 22px; display: block; margin-bottom: 3px; }
+    </style>
+</head>
+<body>
+    <div class="top-nav">MEMBER_66263XH</div>
+    
+    <div class="wallet-card">
+        <div style="font-size: 12px; color: #888;">Total balance</div>
+        <div class="balance">৳ 1500.00</div>
+        <div style="display:flex; justify-content:space-between;">
+            <button class="btn-pay deposit" onclick="alert('বিকাশ নম্বর: ০১৭XXXXXXXX')">Deposit</button>
+            <button class="btn-pay" style="background:#e0e0e0;">Withdraw</button>
+        </div>
+    </div>
+
+    <div class="wingo-box">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+                <div style="font-size:12px;color:#888;">Period Number</div>
+                <div id="period" style="font-weight:bold;">2026013052229</div>
+            </div>
+            <div class="timer-val" id="timer">00:60</div>
+        </div>
+
+        <div class="num-grid">
+            <button class="num-btn n0" onclick="bet(0)">0</button>
+            <button class="num-btn n1" onclick="bet(1)">1</button>
+            <button class="num-btn n2" onclick="bet(2)">2</button>
+            <button class="num-btn n3" onclick="bet(3)">3</button>
+            <button class="num-btn n4" onclick="bet(4)">4</button>
+            <button class="num-btn n5" onclick="bet(5)">5</button>
+            <button class="num-btn n6" onclick="bet(6)">6</button>
+            <button class="num-btn n7" onclick="bet(7)">7</button>
+            <button class="num-btn n8" onclick="bet(8)">8</button>
+            <button class="num-btn n9" onclick="bet(9)">9</button>
+        </div>
+
+        <div class="bs-row">
+            <button class="bs-btn big" onclick="bet('BIG')">BIG</button>
+            <button class="bs-btn small" onclick="bet('SMALL')">SMALL</button>
+        </div>
+    </div>
+
+    <nav class="footer">
+        <a href="#" class="foot-item"><i class="fas fa-home"></i>Home</a>
+        <a href="#" class="foot-item"><i class="fas fa-wallet"></i>Wallet</a>
+        <a href="#" class="foot-item"><i class="fas fa-user"></i>Account</a>
+    </nav>
+
+    <script>
+        let t = 60; 
+        let p = 2026013052229;
+        setInterval(() => {
+            t--; 
+            if(t < 0) { 
+                t = 60; 
+                p++; 
+                document.getElementById('period').innerText = p; 
+            }
+            document.getElementById('timer').innerText = "00:" + (t < 10 ? '0' + t : t);
+        }, 1000);
+
+        function bet(val) {
+            alert("আপনি " + val + " এ বেট ধরেছেন।");
+        }
+    </script>
+</body>
+</html>
