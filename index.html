@@ -153,3 +153,142 @@
 </body>
 </html>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IGNICE Premium WinGo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/dist/css/all.min.css">
+    <style>
+        :root { --red: #ff4d4d; --green: #2ebd59; --violet: #9c27b0; --bg: #f8f9fa; --card: #ffffff; }
+        body { background: var(--bg); color: #333; font-family: Arial, sans-serif; margin: 0; padding-bottom: 80px; }
+        
+        /* Header */
+        .header { background: linear-gradient(to right, #ff4d4d, #ff8c8c); color: white; padding: 15px; text-align: center; font-weight: bold; font-size: 20px; position: relative; }
+        .header i { position: absolute; left: 15px; top: 18px; }
+
+        /* Game Info & Timer */
+        .game-panel { background: white; margin: 10px; padding: 15px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
+        .timer-title { font-size: 14px; color: #666; }
+        .timer-clock { font-size: 28px; font-weight: bold; color: var(--red); }
+        .period-box { font-size: 16px; font-weight: bold; color: #333; }
+
+        /* Color Buttons */
+        .color-row { display: flex; justify-content: space-around; padding: 10px; gap: 10px; }
+        .c-btn { flex: 1; padding: 12px; border: none; border-radius: 5px; font-weight: bold; color: white; cursor: pointer; font-size: 16px; }
+        .green { background: var(--green); }
+        .violet { background: var(--violet); }
+        .red { background: var(--red); }
+
+        /* Number Grid 0-9 */
+        .number-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 15px; }
+        .num-btn { aspect-ratio: 1; border-radius: 50%; border: none; font-size: 18px; font-weight: bold; color: white; cursor: pointer; }
+        .n0, .n5 { background: linear-gradient(45deg, var(--red), var(--violet)); }
+        .n1, .n3, .n7, .n9 { background: var(--green); }
+        .n2, .n4, .n6, .n8 { background: var(--red); }
+
+        /* Big/Small */
+        .bs-row { display: flex; gap: 10px; padding: 0 15px 15px; }
+        .bs-btn { flex: 1; padding: 12px; border: none; border-radius: 25px; font-weight: bold; color: white; }
+        .big { background: #f39c12; border-bottom-right-radius: 5px; border-top-right-radius: 5px; }
+        .small { background: #3498db; border-bottom-left-radius: 5px; border-top-left-radius: 5px; }
+
+        /* History Table (Like your Screenshot) */
+        .history-section { background: white; margin: 10px; border-radius: 10px; overflow: hidden; }
+        .history-tab { display: flex; border-bottom: 1px solid #eee; }
+        .tab-item { flex: 1; text-align: center; padding: 10px; font-weight: bold; font-size: 14px; color: #666; }
+        .tab-item.active { border-bottom: 3px solid var(--red); color: var(--red); }
+        
+        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        th { background: #fdf2f2; padding: 10px; color: #888; }
+        td { padding: 12px 10px; border-bottom: 1px solid #f5f5f5; text-align: center; }
+        .status-fail { color: #ff4d4d; border: 1px solid #ff4d4d; padding: 2px 8px; border-radius: 5px; }
+        .status-success { color: #2ebd59; border: 1px solid #2ebd59; padding: 2px 8px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <i class="fas fa-chevron-left"></i> IGNICE
+    </div>
+
+    <div class="game-panel">
+        <div>
+            <div class="period-box" id="periodDisplay">20260130100052229</div>
+            <div class="timer-title">Period Number</div>
+        </div>
+        <div style="text-align: right;">
+            <div class="timer-clock" id="timer">00:60</div>
+            <div class="timer-title">Time Left</div>
+        </div>
+    </div>
+
+    <div class="color-row">
+        <button class="c-btn green" onclick="bet('Green')">Green</button>
+        <button class="c-btn violet" onclick="bet('Violet')">Violet</button>
+        <button class="c-btn red" onclick="bet('Red')">Red</button>
+    </div>
+
+    <div class="number-grid">
+        <button class="num-btn n0" onclick="bet(0)">0</button>
+        <button class="num-btn n1" onclick="bet(1)">1</button>
+        <button class="num-btn n2" onclick="bet(2)">2</button>
+        <button class="num-btn n3" onclick="bet(3)">3</button>
+        <button class="num-btn n4" onclick="bet(4)">4</button>
+        <button class="num-btn n5" onclick="bet(5)">5</button>
+        <button class="num-btn n6" onclick="bet(6)">6</button>
+        <button class="num-btn n7" onclick="bet(7)">7</button>
+        <button class="num-btn n8" onclick="bet(8)">8</button>
+        <button class="num-btn n9" onclick="bet(9)">9</button>
+    </div>
+
+    <div class="bs-row">
+        <button class="bs-btn big" onclick="bet('Big')">Big</button>
+        <button class="bs-btn small" onclick="bet('Small')">Small</button>
+    </div>
+
+    <div class="history-section">
+        <div class="history-tab">
+            <div class="tab-item active">Game History</div>
+            <div class="tab-item">My History</div>
+        </div>
+        <table id="historyTable">
+            <tr><th>Period</th><th>Number</th><th>Result</th></tr>
+            <tr><td>...2227</td><td><span style="color:var(--red)">2</span></td><td><span class="status-fail">Failed</span></td></tr>
+            <tr><td>...2226</td><td><span style="color:orange">Big</span></td><td><span class="status-success">Succeed</span></td></tr>
+            <tr><td>...2224</td><td><span style="color:var(--red)">Red</span></td><td><span class="status-success">Succeed</span></td></tr>
+        </table>
+    </div>
+
+    <script>
+        // Real Period Serial Logic
+        let timeLeft = 60;
+        let basePeriod = 20260130100052229;
+
+        setInterval(() => {
+            timeLeft--;
+            if (timeLeft < 0) {
+                timeLeft = 60;
+                basePeriod++;
+                document.getElementById('periodDisplay').innerText = basePeriod;
+                addHistory(basePeriod - 1);
+            }
+            document.getElementById('timer').innerText = "00:" + (timeLeft < 10 ? '0' : '') + timeLeft;
+        }, 1000);
+
+        function bet(val) {
+            alert("আপনি " + val + " এ বেট ধরেছেন। পর্যাপ্ত ব্যালেন্স নেই।");
+        }
+
+        function addHistory(p) {
+            const table = document.getElementById('historyTable');
+            const row = table.insertRow(1);
+            const nums = [0,1,2,3,4,5,6,7,8,9];
+            const randomNum = nums[Math.floor(Math.random()*nums.length)];
+            row.innerHTML = `<td>...${String(p).slice(-4)}</td><td>${randomNum}</td><td><span class="status-fail">Failed</span></td>`;
+            if(table.rows.length > 8) table.deleteRow(8);
+        }
+    </script>
+</body>
+</html>
