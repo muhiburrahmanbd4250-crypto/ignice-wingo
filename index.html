@@ -3,61 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WinGo Pro</title>
+    <title>Ignice VIP Game</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/dist/css/all.min.css">
     <style>
-        body { background-color: #0d1117; color: white; font-family: sans-serif; margin: 0; padding-bottom: 70px; }
-        .wallet-card { background: linear-gradient(90deg, #1f2937, #111827); margin: 15px; padding: 20px; border-radius: 15px; border: 1px solid #30363d; text-align: center; }
-        .balance { font-size: 32px; font-weight: bold; color: #f1c40f; margin: 10px 0; }
-        .btn-box { display: flex; gap: 10px; justify-content: center; }
-        .btn { padding: 10px 25px; border-radius: 20px; border: none; font-weight: bold; cursor: pointer; }
-        .deposit { background: #22c55e; color: white; }
-        .withdraw { background: #30363d; color: white; }
+        :root { --red: #ff4d4d; --green: #2ebd59; --violet: #9c27b0; --bg: #090e14; --card: #151a23; }
+        body { background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 80px; overflow-x: hidden; }
         
-        .game-box { background: #161b22; margin: 15px; padding: 20px; border-radius: 15px; text-align: center; }
-        .timer { font-size: 40px; color: #e74c3c; font-weight: bold; margin: 15px 0; }
-        .bet-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .bet-btn { padding: 15px; border-radius: 12px; border: none; font-size: 18px; font-weight: bold; color: white; }
+        /* Profile & Header */
+        .header { background: var(--card); padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2a2e39; }
+        .user-info { display: flex; align-items: center; gap: 10px; }
+        .user-info img { width: 35px; border-radius: 50%; border: 2px solid var(--green); }
+
+        /* Wallet Section */
+        .wallet { background: linear-gradient(135deg, #1d2633, #11141c); margin: 15px; padding: 20px; border-radius: 15px; border: 1px solid #30363d; }
+        .balance { font-size: 28px; font-weight: bold; color: #f1c40f; margin: 5px 0; }
+        .action-row { display: flex; gap: 10px; margin-top: 15px; }
+        .btn-act { flex: 1; padding: 10px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; }
+        .dep { background: var(--green); color: white; }
+        .wit { background: #2a2e39; color: white; }
+
+        /* Game Info & Period */
+        .game-info { background: var(--card); margin: 10px 15px; padding: 15px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .period-id { color: #8b949e; font-size: 14px; }
+        .timer { font-size: 24px; font-weight: bold; color: var(--red); }
+
+        /* Color Buttons */
+        .color-btns { display: flex; justify-content: space-around; padding: 15px; gap: 10px; }
+        .c-btn { flex: 1; padding: 12px; border: none; border-radius: 5px; font-weight: bold; color: white; cursor: pointer; }
+        .btn-green { background: var(--green); }
+        .btn-violet { background: var(--violet); }
+        .btn-red { background: var(--red); }
+
+        /* Big/Small */
+        .bs-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 15px; }
+        .bs-btn { padding: 12px; border: none; border-radius: 5px; font-weight: bold; color: white; cursor: pointer; }
         .big { background: #f39c12; }
         .small { background: #3498db; }
 
-        .footer { position: fixed; bottom: 0; width: 100%; background: #161b22; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #30363d; }
-        .footer i { font-size: 20px; display: block; margin-bottom: 5px; }
+        /* VIP Betting List */
+        .vip-list { margin: 20px 15px; background: var(--card); border-radius: 10px; padding: 10px; }
+        .vip-title { color: #f1c40f; font-weight: bold; margin-bottom: 10px; font-size: 14px; border-bottom: 1px solid #2a2e39; padding-bottom: 5px; }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        th { text-align: left; color: #8b949e; padding: 8px; }
+        td { padding: 8px; border-bottom: 1px solid #1f242d; }
+        .win-amt { color: var(--green); font-weight: bold; }
+
+        /* Navigation */
+        .nav { position: fixed; bottom: 0; width: 100%; background: var(--card); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #2a2e39; }
+        .nav-item { text-align: center; color: #8b949e; font-size: 11px; text-decoration: none; }
+        .nav-item.active { color: var(--green); }
+        .nav-item i { font-size: 20px; display: block; margin-bottom: 3px; }
     </style>
 </head>
 <body>
 
-    <div class="wallet-card">
-        <div style="font-size: 14px; color: #9ca3af;">Total Balance</div>
+    <div class="header">
+        <div class="user-info">
+            <img src="https://via.placeholder.com/50/2ebd59/ffffff?text=U" alt="Profile">
+            <div>
+                <div style="font-size: 14px; font-weight: bold;">User_7782</div>
+                <div style="font-size: 10px; color: #8b949e;">VIP 1</div>
+            </div>
+        </div>
+        <i class="fas fa-bell"></i>
+    </div>
+
+    <div class="wallet">
+        <div style="font-size: 12px; opacity: 0.8;">Wallet Balance</div>
         <div class="balance">৳ 0.00</div>
-        <div class="btn-box">
-            <button class="btn deposit" onclick="alert('ডিপোজিট করতে আমাদের মেসেঞ্জারে যোগাযোগ করুন।')">Deposit</button>
-            <button class="btn withdraw">Withdraw</button>
+        <div class="action-row">
+            <button class="btn-act dep" onclick="deposit()">Deposit</button>
+            <button class="btn-act wit">Withdraw</button>
         </div>
     </div>
 
-    <div class="game-box">
-        <div style="color: #22c55e; font-weight: bold;">WinGo 1 Min</div>
-        <div class="timer" id="timer">00:60</div>
-        <div class="bet-btns">
-            <button class="bet-btn big" onclick="alert('আপনি BIG সিলেক্ট করেছেন')">BIG</button>
-            <button class="bet-btn small" onclick="alert('আপনি SMALL সিলেক্ট করেছেন')">SMALL</button>
+    <div class="game-info">
+        <div>
+            <div class="period-id">Period Number</div>
+            <div id="period" style="font-weight: bold;">20260130001</div>
+        </div>
+        <div>
+            <div class="period-id">Time Left</div>
+            <div class="timer" id="timer">00:60</div>
         </div>
     </div>
 
-    <div class="footer">
-        <div><i class="fas fa-home"></i>Home</div>
-        <div><i class="fas fa-wallet"></i>Wallet</div>
-        <div style="color: #22c55e;"><i class="fas fa-user"></i>Account</div>
+    <div class="color-btns">
+        <button class="c-btn btn-green" onclick="bet('Green')">Green</button>
+        <button class="c-btn btn-violet" onclick="bet('Violet')">Violet</button>
+        <button class="c-btn btn-red" onclick="bet('Red')">Red</button>
+    </div>
+
+    <div class="bs-btns">
+        <button class="bs-btn big" onclick="bet('Big')">BIG</button>
+        <button class="bs-btn small" onclick="bet('Small')">SMALL</button>
+    </div>
+
+    <div class="vip-list">
+        <div class="vip-title"><i class="fas fa-crown"></i> VIP Recent Bets</div>
+        <table id="vipTable">
+            <tr><th>User</th><th>Amount</th><th>Game</th></tr>
+            <tr><td>User_992</td><td>৳ 5000</td><td>Big</td></tr>
+            <tr><td>User_102</td><td>৳ 2500</td><td>Green</td></tr>
+            <tr><td>User_554</td><td>৳ 12000</td><td>Small</td></tr>
+        </table>
+    </div>
+
+    <div class="nav">
+        <a href="#" class="nav-item active"><i class="fas fa-home"></i>Home</a>
+        <a href="#" class="nav-item"><i class="fas fa-gamepad"></i>Games</a>
+        <a href="#" class="nav-item"><i class="fas fa-wallet"></i>Wallet</a>
+        <a href="#" class="nav-item"><i class="fas fa-user"></i>Profile</a>
     </div>
 
     <script>
-        let time = 60;
+        // Period & Timer Logic
+        let timeLeft = 60;
+        let period = 20260130001;
+
         setInterval(() => {
-            time--;
-            if(time < 0) time = 60;
-            document.getElementById('timer').innerText = "00:" + (time < 10 ? '0'+time : time);
+            timeLeft--;
+            if (timeLeft < 0) {
+                timeLeft = 60;
+                period++;
+                document.getElementById('period').innerText = period;
+                updateVIP();
+            }
+            document.getElementById('timer').innerText = "00:" + (timeLeft < 10 ? '0' : '') + timeLeft;
         }, 1000);
+
+        function deposit() {
+            alert("বিকাশ ডিপোজিট নম্বর: ০১৭XXXXXXXX\nটাকা পাঠিয়ে ট্রানজেকশন আইডি দিন।");
+        }
+
+        function bet(type) {
+            alert(type + " সিলেক্ট করেছেন। আপনার ব্যালেন্স পর্যাপ্ত নয়।");
+        }
+
+        // Fake VIP Updates
+        function updateVIP() {
+            const table = document.getElementById('vipTable');
+            const users = ["User_442", "User_881", "User_239", "User_902"];
+            const amounts = ["1000", "5000", "300", "15000"];
+            const row = table.insertRow(1);
+            row.innerHTML = `<td>${users[Math.floor(Math.random()*users.length)]}</td><td class="win-amt">৳ ${amounts[Math.floor(Math.random()*amounts.length)]}</td><td>Color</td>`;
+            if(table.rows.length > 6) table.deleteRow(6);
+        }
     </script>
 </body>
 </html>
+
