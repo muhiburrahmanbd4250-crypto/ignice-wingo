@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IGNICE WinGo</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f8f9fa; margin: 0; text-align: center; }
+        .header { background: linear-gradient(180deg, #ff4d4d, #e60000); padding: 15px; color: white; font-weight: bold; font-size: 20px; }
+        .wallet-card { background: white; margin: 15px; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .btn-group { display: flex; justify-content: space-around; margin-top: 15px; }
+        .btn { padding: 10px 25px; border-radius: 20px; border: none; font-weight: bold; color: white; cursor: pointer; }
+        .withdraw { background-color: #ff4d4d; }
+        .deposit { background-color: #28a745; }
+        .timer-section { background: white; margin: 15px; padding: 15px; border-radius: 15px; border-top: 4px solid #ff4d4d; }
+        .time-display { font-size: 35px; font-weight: bold; color: #333; margin: 10px 0; }
+        .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 10px; }
+        .num-ball { width: 45px; height: 45px; border-radius: 50%; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="header">IGNICE</div>
+    <div class="wallet-card">
+        <p style="color: #666; margin: 0;">Wallet balance</p>
+        <h2 style="margin: 5px 0;">৳ 500.00</h2>
+        <div class="btn-group">
+            <button class="btn withdraw">Withdraw</button>
+            <button class="btn deposit">Deposit</button>
+        </div>
+    </div>
+    <div class="timer-section">
+        <div><strong>WinGo 30sec</strong></div>
+        <div class="time-display" id="timer">00:30</div>
+        <div class="grid" id="number-grid">
+            </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const timerDisplay = document.getElementById('timer');
+        socket.on('timer', (t) => {
+            timerDisplay.innerText = "00:" + (t < 10 ? '0' + t : t);
+        });
+        const grid = document.getElementById('number-grid');
+        for(let i=0; i<=9; i++) {
+            const ball = document.createElement('div');
+            ball.className = 'num-ball';
+            ball.innerText = i;
+            ball.style.color = i % 2 === 0 ? '#e74c3c' : '#28a745';
+            ball.onclick = () => alert('You bet on number ' + i);
+            grid.appendChild(ball);
+        }
+    </script>
+</body>
+</html>
