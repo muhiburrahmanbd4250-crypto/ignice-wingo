@@ -1,77 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+htmll lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IGNICE WIN PRO</title>
+    <title>HGNICE VIP Pro</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/dist/css/all.min.css">
     <style>
-        :root { --red: #ff4d4d; --green: #2ebd59; --violet: #9c27b0; --bg: #f8f9fa; }
-        body { background: var(--bg); font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 80px; }
+        :root { --red: #ff4d4d; --green: #2ebd59; --violet: #9c27b0; --bg: #f5f5f5; }
+        body { background: var(--bg); font-family: 'Poppins', sans-serif; margin: 0; padding-bottom: 80px; }
         
         /* Premium Header */
-        .header { background: linear-gradient(90deg, #ff4d4d, #ff7675); color: white; padding: 18px; text-align: center; font-weight: bold; font-size: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header { background: linear-gradient(90deg, #ff4d4d, #ff7675); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
         
-        /* Game Info Panel */
-        .game-panel { background: white; margin: 12px; padding: 20px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .period-id { font-weight: bold; font-size: 16px; color: #444; }
-        .timer-val { font-size: 32px; font-weight: 900; color: var(--red); letter-spacing: 1px; }
+        /* Game Mode Tabs */
+        .mode-tabs { display: flex; background: white; padding: 10px; gap: 10px; overflow-x: auto; }
+        .mode-btn { padding: 8px 15px; border: 1px solid #ddd; border-radius: 20px; font-size: 12px; white-space: nowrap; cursor: pointer; }
+        .mode-btn.active { background: var(--red); color: white; border-color: var(--red); }
 
-        /* Color Selection */
-        .color-row { display: flex; gap: 10px; padding: 0 12px; margin-bottom: 15px; }
-        .c-btn { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; color: white; font-size: 16px; cursor: pointer; transition: 0.3s; }
-        .btn-green { background: var(--green); }
-        .btn-violet { background: var(--violet); }
-        .btn-red { background: var(--red); }
+        /* Timer Section */
+        .timer-card { background: white; margin: 10px; padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .timer-val { font-size: 30px; font-weight: bold; color: var(--red); }
 
-        /* Number Grid 0-9 */
-        .num-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; padding: 15px; background: white; margin: 12px; border-radius: 15px; }
-        .n-btn { aspect-ratio: 1; border-radius: 50%; border: none; font-size: 18px; font-weight: bold; color: white; cursor: pointer; }
-        .n0, .n5 { background: linear-gradient(45deg, var(--red), var(--violet)); }
+        /* Number Grid */
+        .num-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 15px; background: white; margin: 10px; border-radius: 12px; }
+        .n-btn { width: 45px; height: 45px; border-radius: 50%; border: none; font-weight: bold; color: white; cursor: pointer; font-size: 16px; margin: auto; }
+        .n0, .n5 { background: linear-gradient(var(--red), var(--violet)); }
         .n1, .n3, .n7, .n9 { background: var(--green); }
         .n2, .n4, .n6, .n8 { background: var(--red); }
 
-        /* Big & Small Section */
-        .bs-row { display: flex; gap: 12px; padding: 0 12px; }
-        .bs-btn { flex: 1; padding: 16px; border: none; border-radius: 30px; font-weight: bold; font-size: 18px; color: white; cursor: pointer; }
-        .big { background: #f39c12; border-bottom-left-radius: 10px; }
-        .small { background: #3498db; border-bottom-right-radius: 10px; }
+        /* Big/Small Buttons */
+        .bs-row { display: flex; gap: 10px; padding: 0 15px; margin-bottom: 20px; }
+        .bs-btn { flex: 1; padding: 15px; border: none; border-radius: 8px; font-weight: bold; font-size: 18px; color: white; }
 
-        /* Pro History Table */
-        .history { background: white; margin: 20px 12px; border-radius: 15px; padding: 15px; }
-        .history-title { font-weight: bold; color: #555; border-bottom: 2px solid #f8f9fa; padding-bottom: 10px; margin-bottom: 10px; }
-        table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        th { color: #888; text-align: left; padding: 8px; }
-        td { padding: 12px 8px; border-bottom: 1px solid #f9f9f9; }
-        .status-win { color: var(--green); font-weight: bold; }
-        .status-fail { color: var(--red); font-weight: bold; }
-
-        /* Navigation Bar */
-        .nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #eee; }
-        .nav-item { text-align: center; color: #888; text-decoration: none; font-size: 11px; }
-        .nav-item.active { color: var(--red); }
-        .nav-item i { font-size: 22px; display: block; margin-bottom: 4px; }
+        /* Admin Panel Overlay */
+        #adminBox { display: none; position: fixed; top: 20%; left: 5%; width: 90%; background: #222; color: gold; padding: 20px; border-radius: 15px; z-index: 1000; border: 2px solid gold; }
+        .admin-input { width: 90%; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        
+        /* History Table */
+        .history { background: white; margin: 10px; padding: 15px; border-radius: 12px; }
+        table { width: 100%; text-align: center; font-size: 13px; border-collapse: collapse; }
+        th { color: #888; padding-bottom: 10px; }
+        td { padding: 10px 0; border-bottom: 1px solid #eee; }
     </style>
 </head>
 <body>
 
-    <div class="header">IGNICE WIN PRO</div>
-
-    <div class="game-panel">
-        <div>
-            <div style="font-size: 12px; color: #888;">Period Number</div>
-            <div class="period-id" id="period">2026013052229</div>
-        </div>
-        <div style="text-align: right;">
-            <div style="font-size: 12px; color: #888;">Time Remaining</div>
-            <div class="timer-val" id="timer">00:60</div>
-        </div>
+    <div class="header" onclick="openAdmin()">
+        <span>HGNICE VIP</span>
+        <i class="fas fa-headset"></i>
     </div>
 
-    <div class="color-row">
-        <button class="c-btn btn-green" onclick="bet('Green')">Green</button>
-        <button class="c-btn btn-violet" onclick="bet('Violet')">Violet</button>
-        <button class="c-btn btn-red" onclick="bet('Red')">Red</button>
+    <div class="mode-tabs">
+        <div class="mode-btn active">WinGo 30s</div>
+        <div class="mode-btn">WinGo 1Min</div>
+        <div class="mode-btn">WinGo 3Min</div>
+    </div>
+
+    <div class="timer-card">
+        <div>
+            <div style="font-size: 12px; color: #888;">Period Number</div>
+            <div id="period" style="font-weight: bold; font-size: 16px;">20260130100052229</div>
+        </div>
+        <div class="timer-val" id="timer">00:30</div>
     </div>
 
     <div class="num-grid">
@@ -88,35 +78,75 @@
     </div>
 
     <div class="bs-row">
-        <button class="bs-btn big" onclick="bet('BIG')">BIG</button>
-        <button class="bs-btn small" onclick="bet('SMALL')">SMALL</button>
+        <button class="bs-btn" style="background: #f39c12;" onclick="bet('BIG')">BIG</button>
+        <button class="bs-btn" style="background: #3498db;" onclick="bet('SMALL')">SMALL</button>
+    </div>
+
+    <div id="adminBox">
+        <h3 style="text-align: center;">🛡️ Admin Dashboard</h3>
+        <p>Next Winning Number (0-9):</p>
+        <input type="number" id="manualNum" class="admin-input" placeholder="নম্বর দিন">
+        <button onclick="saveAdmin()" style="width:100%; padding:10px; background:gold; border:none; border-radius:5px; font-weight:bold;">APPLY RESULT</button>
+        <button onclick="closeAdmin()" style="width:100%; margin-top:10px; background:red; color:white; border:none; padding:5px;">Close</button>
     </div>
 
     <div class="history">
-        <div class="history-title">Game Records</div>
-        <table>
-            <tr><th>Period</th><th>Number</th><th>Result</th></tr>
-            <tr><td>...2228</td><td><span style="color:var(--red)">2</span></td><td class="status-fail">Failed</td></tr>
-            <tr><td>...2227</td><td><span style="color:var(--green)">7</span></td><td class="status-win">Succeed</td></tr>
+        <h4 style="margin-top:0;">Game History</h4>
+        <table id="historyTable">
+            <tr><th>Period</th><th>Number</th><th>Size</th></tr>
+            <tr><td>...2228</td><td>5</td><td>Big</td></tr>
+            <tr><td>...2227</td><td>2</td><td>Small</td></tr>
         </table>
     </div>
 
-    <div class="nav">
-        <a href="#" class="nav-item active"><i class="fas fa-home"></i>Home</a>
-        <a href="#" class="nav-item"><i class="fas fa-wallet"></i>Wallet</a>
-        <a href="#" class="nav-item" onclick="alert('বিকাশ নম্বর: ০১৭XXXXXXXX')"><i class="fas fa-plus-circle"></i>Deposit</a>
-        <a href="#" class="nav-item"><i class="fas fa-user"></i>Account</a>
-    </div>
-
     <script>
-        let t = 60; let p = 2026013052229;
+        let time = 30;
+        let period = 20260130100052229;
+        let nextResult = null;
+        let clickCount = 0;
+
         setInterval(() => {
-            t--;
-            if(t < 0) { t = 60; p++; document.getElementById('period').innerText = p; }
-            document.getElementById('timer').innerText = "00:" + (t < 10 ? '0'+t : t);
+            time--;
+            if(time < 0) {
+                time = 30;
+                let finalNum = (nextResult !== null) ? nextResult : Math.floor(Math.random() * 10);
+                addHistory(period, finalNum);
+                period++;
+                document.getElementById('period').innerText = period;
+                nextResult = null;
+            }
+            document.getElementById('timer').innerText = "00:" + (time < 10 ? '0'+time : time);
         }, 1000);
 
-        function bet(v) { alert("আপনি " + v + " এ বেট ধরেছেন। পর্যাপ্ত ব্যালেন্স নেই।"); }
+        function openAdmin() {
+            clickCount++;
+            if(clickCount >= 5) {
+                let p = prompt("Enter Admin Password:");
+                if(p === "1234") document.getElementById('adminBox').style.display = 'block';
+                clickCount = 0;
+            }
+        }
+
+        function saveAdmin() {
+            let val = document.getElementById('manualNum').value;
+            if(val !== "") {
+                nextResult = parseInt(val);
+                alert("Next Result Set to: " + val);
+                closeAdmin();
+            }
+        }
+
+        function closeAdmin() { document.getElementById('adminBox').style.display = 'none'; }
+
+        function addHistory(p, n) {
+            let table = document.getElementById('historyTable');
+            let row = table.insertRow(1);
+            let size = (n >= 5) ? "Big" : "Small";
+            row.innerHTML = `<td>...${String(p).slice(-4)}</td><td>${n}</td><td>${size}</td>`;
+            if(table.rows.length > 10) table.deleteRow(10);
+        }
+
+        function bet(v) { alert("Bet placed on: " + v + "\nInsufficient Balance!"); }
     </script>
 </body>
 </html>
