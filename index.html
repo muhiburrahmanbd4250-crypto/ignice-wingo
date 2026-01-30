@@ -3,53 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IGNICE WinGo</title>
+    <title>WinGo Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/dist/css/all.min.css">
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f8f9fa; margin: 0; text-align: center; }
-        .header { background: linear-gradient(180deg, #ff4d4d, #e60000); padding: 15px; color: white; font-weight: bold; font-size: 20px; }
-        .wallet-card { background: white; margin: 15px; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .btn-group { display: flex; justify-content: space-around; margin-top: 15px; }
-        .btn { padding: 10px 25px; border-radius: 20px; border: none; font-weight: bold; color: white; cursor: pointer; }
-        .withdraw { background-color: #ff4d4d; }
-        .deposit { background-color: #28a745; }
-        .timer-section { background: white; margin: 15px; padding: 15px; border-radius: 15px; border-top: 4px solid #ff4d4d; }
-        .time-display { font-size: 35px; font-weight: bold; color: #333; margin: 10px 0; }
-        .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 10px; }
-        .num-ball { width: 45px; height: 45px; border-radius: 50%; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; }
+        body { background-color: #0d1117; color: white; font-family: sans-serif; margin: 0; padding-bottom: 70px; }
+        .wallet-card { background: linear-gradient(90deg, #1f2937, #111827); margin: 15px; padding: 20px; border-radius: 15px; border: 1px solid #30363d; text-align: center; }
+        .balance { font-size: 32px; font-weight: bold; color: #f1c40f; margin: 10px 0; }
+        .btn-box { display: flex; gap: 10px; justify-content: center; }
+        .btn { padding: 10px 25px; border-radius: 20px; border: none; font-weight: bold; cursor: pointer; }
+        .deposit { background: #22c55e; color: white; }
+        .withdraw { background: #30363d; color: white; }
+        
+        .game-box { background: #161b22; margin: 15px; padding: 20px; border-radius: 15px; text-align: center; }
+        .timer { font-size: 40px; color: #e74c3c; font-weight: bold; margin: 15px 0; }
+        .bet-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .bet-btn { padding: 15px; border-radius: 12px; border: none; font-size: 18px; font-weight: bold; color: white; }
+        .big { background: #f39c12; }
+        .small { background: #3498db; }
+
+        .footer { position: fixed; bottom: 0; width: 100%; background: #161b22; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #30363d; }
+        .footer i { font-size: 20px; display: block; margin-bottom: 5px; }
     </style>
 </head>
 <body>
-    <div class="header">IGNICE</div>
+
     <div class="wallet-card">
-        <p style="color: #666; margin: 0;">Wallet balance</p>
-        <h2 style="margin: 5px 0;">৳ 500.00</h2>
-        <div class="btn-group">
+        <div style="font-size: 14px; color: #9ca3af;">Total Balance</div>
+        <div class="balance">৳ 0.00</div>
+        <div class="btn-box">
+            <button class="btn deposit" onclick="alert('ডিপোজিট করতে আমাদের মেসেঞ্জারে যোগাযোগ করুন।')">Deposit</button>
             <button class="btn withdraw">Withdraw</button>
-            <button class="btn deposit">Deposit</button>
         </div>
     </div>
-    <div class="timer-section">
-        <div><strong>WinGo 30sec</strong></div>
-        <div class="time-display" id="timer">00:30</div>
-        <div class="grid" id="number-grid">
-            </div>
+
+    <div class="game-box">
+        <div style="color: #22c55e; font-weight: bold;">WinGo 1 Min</div>
+        <div class="timer" id="timer">00:60</div>
+        <div class="bet-btns">
+            <button class="bet-btn big" onclick="alert('আপনি BIG সিলেক্ট করেছেন')">BIG</button>
+            <button class="bet-btn small" onclick="alert('আপনি SMALL সিলেক্ট করেছেন')">SMALL</button>
+        </div>
     </div>
-    <script src="/socket.io/socket.io.js"></script>
+
+    <div class="footer">
+        <div><i class="fas fa-home"></i>Home</div>
+        <div><i class="fas fa-wallet"></i>Wallet</div>
+        <div style="color: #22c55e;"><i class="fas fa-user"></i>Account</div>
+    </div>
+
     <script>
-        const socket = io();
-        const timerDisplay = document.getElementById('timer');
-        socket.on('timer', (t) => {
-            timerDisplay.innerText = "00:" + (t < 10 ? '0' + t : t);
-        });
-        const grid = document.getElementById('number-grid');
-        for(let i=0; i<=9; i++) {
-            const ball = document.createElement('div');
-            ball.className = 'num-ball';
-            ball.innerText = i;
-            ball.style.color = i % 2 === 0 ? '#e74c3c' : '#28a745';
-            ball.onclick = () => alert('You bet on number ' + i);
-            grid.appendChild(ball);
-        }
+        let time = 60;
+        setInterval(() => {
+            time--;
+            if(time < 0) time = 60;
+            document.getElementById('timer').innerText = "00:" + (time < 10 ? '0'+time : time);
+        }, 1000);
     </script>
 </body>
 </html>
